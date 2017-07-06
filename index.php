@@ -7,20 +7,23 @@ $content = file_get_contents('php://input');
 $events = json_decode($content, true);
 // Validate parsed JSON data
 if (!is_null($events['events'])) {
+	$says = array("Hello", "สวัสดี", "อีกแล้วเหรอ", "555");
+	$answers = array("ตั้งสตินิดนึงจ๊ะ", "ด้วยความยินดีครับ", "อา มะ ภัน เต", "ครับผม");
+
 	// Loop through each event
 	foreach ($events['events'] as $event) {
 		// Reply only when message sent is in 'text' format
 		if ($event['type'] == 'message' && $event['message']['type'] == 'text') {
 			// Get text sent
 			$text = $event['message']['text'];
-			if($text == 'Hello'){
+			if(in_array($text, $says)){
 				// Get replyToken
 				$replyToken = $event['replyToken'];
 
 				// Build message to reply back
 				$messages = [
 					'type' => 'text',
-					'text' => 'ด้วยความยินดีครับ'
+					'text' => $answers[rand(0,3)]
 				];
 
 				// Make a POST Request to Messaging API to reply to sender
