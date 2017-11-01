@@ -7,16 +7,32 @@ $content = file_get_contents('php://input');
 $events = json_decode($content, true);
 // Validate parsed JSON data
 if (!is_null($events['events'])) {
-	$says = array("Hello", "สวัสดี", "อีกแล้วเหรอ", "555");
-	$answers = array("ตั้งสตินิดนึงจ๊ะ", "ด้วยความยินดีครับ", "อา มะ ภัน เต", "ครับผม");
-
+	$says = array("บอท", "หรอย", "เมีย", "จีบ");
+	
+	$answers = array("เรียกหนูทำไมค่ะ", "เมียไม่อยู่สินะ ถึงเรียกนู๋มาเนี่ย", "เห้ออออ อย่านินทานู๋สิค่ะ", "ค่ะที่รัก");
+    $answers2 = array("หนูก็ว่างั้นแหละค่ะ", "ชอบๆๆๆ", "อิอิ", "บางครั้งก็พูดมีสาระกันบ้างนะค่ะพี่ๆ");
+	$answers3 = array("นินทาเมียไม่ดีนะค่ะพี่", "ไหนว่าไม่กลัวเมียค่ะ", "เก่งจริงงงงง ลับหลังเมียนี่", "เดี๋ยวนู๋จะฟ้องเมียพี่ คอยดู");
+	$answers4 = array("ดูหนังหน้าตัวเองก่อนค่ะ", "ตื่นๆๆ ค่ะ", "นู๋มีผัวแล้วค่ะ", "นู๋ไม่ชอบคนเจ้าชู้ค่ะ");
 	// Loop through each event
 	foreach ($events['events'] as $event) {
 		// Reply only when message sent is in 'text' format
 		if ($event['type'] == 'message' && $event['message']['type'] == 'text') {
 			// Get text sent
 			$text = $event['message']['text'];
-			if(in_array($text, $says)){
+			$ans = null;
+			if (strpos($text, $says[0]) !== false) {
+				$ans = $answers[rand(0,3)];
+			}
+			elseif (strpos($text, $says[1]) !== false) {
+				$ans = $answers2[rand(0,3)];
+			}
+			elseif (strpos($text, $says[2]) !== false) {
+				$ans = $answers3[rand(0,3)];
+			}
+			elseif (strpos($text, $says[3]) !== false) {
+				$ans = $answers4[rand(0,3)];
+			}			
+			if($ans != null){
 				// Get replyToken
 				$replyToken = $event['replyToken'];
 
