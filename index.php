@@ -32,14 +32,14 @@ if (!is_null($events['events'])) {
 			elseif (strpos($text, $says[3]) !== false) {
 				$ans = $answers4[rand(0,3)];
 			}			
-			if($ans != null){
+			if($ans !=null){
 				// Get replyToken
 				$replyToken = $event['replyToken'];
 
 				// Build message to reply back
 				$messages = [
 					'type' => 'text',
-					'text' => $answers[rand(0,3)]
+					'text' => $ans
 				];
 
 				// Make a POST Request to Messaging API to reply to sender
