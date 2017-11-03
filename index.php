@@ -7,12 +7,14 @@ $content = file_get_contents('php://input');
 $events = json_decode($content, true);
 // Validate parsed JSON data
 if (!is_null($events['events'])) {
-	$says = array("บอท", "หรอย", "เมีย", "จีบ");
+	$says = array("บอท", "หรอย", "เมีย", "จีบ", "เย็ด", "ลอยกระทง");
 	
-	$answers = array("เรียกหนูทำไมค่ะ", "เมียไม่อยู่สินะ ถึงเรียกนู๋มาเนี่ย", "เห้ออออ อย่านินทานู๋สิค่ะ", "ค่ะที่รัก");
+	$answers = array("เรียกหนูทำไมค่ะ", "เมียไม่อยู่สินะ ถึงเรียกนู๋มาเนี่ย", "เห้ออออ อย่าว่านู๋สิค่ะ", "ค่ะที่รัก", "ว่าไงค่ะ" , "ใจเย็นๆ ค่ะ ได้ทุกคน", "เงี่ยนเหรอเรียกอยู่ได้");
     $answers2 = array("หนูก็ว่างั้นแหละค่ะ", "ชอบๆๆๆ", "อิอิ", "บางครั้งก็พูดมีสาระกันบ้างนะค่ะพี่ๆ");
 	$answers3 = array("นินทาเมียไม่ดีนะค่ะพี่", "ไหนว่าไม่กลัวเมียค่ะ", "เก่งจริงงงงง ลับหลังเมียนี่", "เดี๋ยวนู๋จะฟ้องเมียพี่ คอยดู");
 	$answers4 = array("ดูหนังหน้าตัวเองก่อนค่ะ", "ตื่นๆๆ ค่ะ", "นู๋มีผัวแล้วค่ะ", "นู๋ไม่ชอบคนเจ้าชู้ค่ะ");
+	$answers5 = array("อย่าดีกว่าค่ะ นู๋ไม่ชอบของเล็ก", "ไปกินเคร็กคูมาก่อนค่ะ แล้วค่อยว่ากัน", "ชักว่าวไปก่อนค่ะ", "เห็นแบบนี้นู๋ก็ไม่ง่ายนะคะ");
+	$answers6 = array("จะมีใครอยากไปลอยกะนู๋บ้างเนี่ย", "ไปด้วยคนค่ะ");
 	// Loop through each event
 	foreach ($events['events'] as $event) {
 		// Reply only when message sent is in 'text' format
@@ -20,8 +22,11 @@ if (!is_null($events['events'])) {
 			// Get text sent
 			$text = $event['message']['text'];
 			$ans = null;
-			if (strpos($text, $says[0]) !== false) {
-				$ans = $answers[rand(0,3)];
+			if (strpos($text, $says[0]) !== false && strpos($text, $says[4]) !== false ) {
+				$ans = $answers5[rand(0,6)];
+			}
+			elseif (strpos($text, $says[0]) !== false) {
+				$ans = $answers[rand(0,6)];
 			}
 			elseif (strpos($text, $says[1]) !== false) {
 				$ans = $answers2[rand(0,3)];
@@ -31,6 +36,9 @@ if (!is_null($events['events'])) {
 			}
 			elseif (strpos($text, $says[3]) !== false) {
 				$ans = $answers4[rand(0,3)];
+			}
+            elseif (strpos($text, $says[5]) !== false) {
+				$ans = $answers6[rand(0,1)];
 			}			
 			if($ans !=null){
 				// Get replyToken
